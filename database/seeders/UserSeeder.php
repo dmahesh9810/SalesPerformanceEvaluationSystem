@@ -9,11 +9,11 @@ class UserSeeder
     public static function run()
     {
         $db = DB::getInstance();
-        $stmt = $db->prepare("INSERT INTO users (name, email) VALUES (:name, :email)");
+        $stmt = $db->prepare("INSERT INTO users (name, email,password) VALUES (:name, :email,:password)");
 
         $data = [
-            ['name' => 'John Doex', 'email' => 'john@example.com'],
-            ['name' => 'Jane Smith', 'email' => 'jane@example.com'],
+            ['name' => 'John Doex', 'email' => 'john@example.com','password'=>'1234'],
+            ['name' => 'Jane Smith', 'email' => 'jane@example.com','password'=>'1234'],
         ];
 
         foreach ($data as $user) {

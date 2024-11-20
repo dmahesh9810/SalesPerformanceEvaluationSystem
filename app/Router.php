@@ -34,14 +34,25 @@ class Router
     public static function dispatch($uri, $method)
     {
         foreach (self::$routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === $method) {
+            if (self::matchUri($route['uri'], $uri) && $route['method'] === $method) {
+                $routeUri = preg_replace('/\{[^\/]+\}/', '([^/]+)', $route['uri']);
+                preg_match('#^' . $routeUri . '$#', $uri, $matches);
+                array_shift($matches); // Remove full match
+            
                 list($controller, $method) = explode('@', $route['action']);
                 $controller = "App\\Controllers\\$controller";
-                call_user_func_array([new $controller, $method], []);
+                call_user_func_array([new $controller, $method], $matches); // Pass route params
                 return;
             }
+            
         }
         http_response_code(404);
         echo json_encode(['error' => 'Route not found']);
     }
+    private static function matchUri($routeUri, $requestUri)
+{
+    $routeUri = preg_replace('/\{[^\/]+\}/', '([^/]+)', $routeUri); // Convert `{id}` to a regex
+    return preg_match('#^' . $routeUri . '$#', $requestUri);
+}
+
 }

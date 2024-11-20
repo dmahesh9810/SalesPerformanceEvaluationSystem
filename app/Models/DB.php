@@ -45,4 +45,17 @@ class DB
 
         return self::$instance->connection;
     }
+    public static function query($sql, $params = [])
+{
+    $pdo = self::getInstance(); // Get the PDO connection
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt;
+}
+
+public static function lastInsertId()
+{
+    return self::getInstance()->lastInsertId();
+}
+
 }

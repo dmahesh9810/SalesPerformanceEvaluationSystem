@@ -21,9 +21,17 @@ class UserController
     public function store()
     {
         $data = json_decode(file_get_contents('php://input'), true);
+    
+        if (!$data) {
+            http_response_code(400); // Bad Request
+            echo json_encode(['error' => 'Invalid JSON input']);
+            return;
+        }
+    
         $user = User::create($data);
         echo json_encode($user);
     }
+    
 
     public function update($id)
     {
