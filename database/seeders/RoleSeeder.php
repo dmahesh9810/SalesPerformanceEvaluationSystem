@@ -15,10 +15,10 @@ class RoleSeeder
             ['name' => 'admin'],
             ['name' => 'manager'],
             ['name' => 'supervisor'],
-            ['name' => 'Advisors'],
+            ['name' => 'advisors'],
             ['name' => 'team_leader'],
             ['name' => 'sales_agents'],
-            ['name' => 'Cashier'],
+            ['name' => 'cashier'],
         ];
 
         foreach ($data as $user) {
